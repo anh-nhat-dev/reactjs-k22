@@ -2,7 +2,7 @@ import React from "react";
 import Home from "./Home";
 import { getProducts } from "../../services/Server";
 
-class HomeContainer extends React.Component {
+class HomeContainer extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -32,7 +32,6 @@ class HomeContainer extends React.Component {
   });
 
   render() {
-    console.log(this.state);
     return <Home {...this._extract()} />;
   }
 }

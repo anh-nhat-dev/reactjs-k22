@@ -1,10 +1,17 @@
-import axios from "axios";
-import ApiConfig from "../config/api";
+import Http from "./Http";
 
 export const getProducts = function (config = {}) {
-  return axios.get(ApiConfig.BASE_URL_API + "/get-products", config);
+  return Http.get("/get-products", config);
 };
 
 export const getDetailProduct = function (id, config = {}) {
-  return axios.get(ApiConfig.BASE_URL_API + `/product/${id}`, config);
+  return Http.get(`/product/${id}`, config);
+};
+
+export const getCommentProduct = function (id, config) {
+  return Http.get(`/get-product-comments/${id}`, config);
+};
+
+export const createComment = function (data = {}, config = {}) {
+  return Http.post(`/create-comment`, data, config);
 };
