@@ -32,10 +32,10 @@ class DetailContainer extends React.Component {
     e.preventDefault();
     const { inputs } = this.state;
     const id = _.get(this.props.match, "params.id");
-    await createComment({ productId: id, ...inputs });
+    await createComment(id, inputs);
     getCommentProduct(id, {}).then(({ data }) => {
       this.setState({
-        comments: data.data,
+        comments: data.data.docs,
         inputs: inputDefaultValue,
       });
     });
@@ -45,7 +45,7 @@ class DetailContainer extends React.Component {
     const id = _.get(this.props.match, "params.id");
     const product = await getDetailProduct(id).then(({ data }) => data.data);
     const comments = await getCommentProduct(id, {}).then(
-      ({ data }) => data.data
+      ({ data }) => data.data.docs
     );
     this.setState({
       product,

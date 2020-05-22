@@ -14,11 +14,11 @@ class HomeContainer extends React.PureComponent {
 
   async componentDidMount() {
     const newProducts = await getProducts({ params: { limit: 6 } }).then(
-      ({ data }) => data.data
+      ({ data }) => data.data.docs
     );
     const featureProducts = await getProducts({
       params: { isFeatured: true, limit: 6 },
-    }).then(({ data }) => data.data);
+    }).then(({ data }) => data.data.docs);
 
     this.setState({
       newProducts,
