@@ -6,6 +6,9 @@ import {
 } from "../../services/Server";
 import _ from "lodash";
 import Detail from "./Detail";
+import { connect } from "react-redux";
+
+import { actionType } from "../../shared/constants";
 
 const inputDefaultValue = {
   name: "",
@@ -41,6 +44,17 @@ class DetailContainer extends React.Component {
     });
   };
 
+  _onClickAddToCart = (e, product) => {
+    e.preventDefault();
+    this.props.addToCart({
+      id: product._id,
+      price: product.price,
+      name: product.name,
+      image: product.image,
+      quantity: 1,
+    });
+  };
+
   async componentDidMount() {
     const id = _.get(this.props.match, "params.id");
     const product = await getDetailProduct(id).then(({ data }) => data.data);
@@ -60,12 +74,22 @@ class DetailContainer extends React.Component {
     inputs: this.state.inputs,
     onChangeInput: this._onChangeInput,
     onSubmitForm: this._onSubmitForm,
+    onClickAddToCart: this._onClickAddToCart,
   });
 
   render() {
-    console.log(this.state);
     return <Detail {...this._exTract(this.state.product)} />;
   }
 }
 
-export default DetailContainer;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (item) =>
+      dispatch({
+        type: actionType.ADD_TO_CART,
+        payload: item,
+      }),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(DetailContainer);

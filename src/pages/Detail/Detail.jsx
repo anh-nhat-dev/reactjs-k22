@@ -9,6 +9,7 @@ class Detail extends React.Component {
       inputs,
       onChangeInput,
       onSubmitForm,
+      onClickAddToCart,
     } = this.props;
     return (
       <>
@@ -55,7 +56,12 @@ class Detail extends React.Component {
                   </li>
                 </ul>
                 <div id="add-cart">
-                  <a href="#">Mua ngay</a>
+                  {(product?.is_stock && (
+                    <a href="#" onClick={(e) => onClickAddToCart(e, product)}>
+                      Mua ngay
+                    </a>
+                  )) ||
+                    null}
                 </div>
               </div>
             </div>
