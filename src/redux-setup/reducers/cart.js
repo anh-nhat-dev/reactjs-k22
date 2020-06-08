@@ -10,6 +10,13 @@ export default function(state = initState, action) {
       return _handleAddToCart(state, action.payload);
     case actionType.UPDATE_QUANTITY_CART:
       return _handleUpdateQuantityCart(state, action.payload);
+    case actionType.DELETE_PRODUCT_CART:
+      const newCart = state.data.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return { ...state, data: newCart };
+    case actionType.DELETE_ALL_CART:
+      return initState;
     default:
       return state;
   }

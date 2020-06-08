@@ -16,6 +16,7 @@ const inputDefaultValue = {
   content: "",
 };
 
+let timeOut = null;
 class DetailContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +24,7 @@ class DetailContainer extends React.Component {
       product: null,
       comments: [],
       inputs: inputDefaultValue,
+      notifications: null,
     };
   }
 
@@ -45,6 +47,7 @@ class DetailContainer extends React.Component {
   };
 
   _onClickAddToCart = (e, product) => {
+    if (timeOut) return;
     e.preventDefault();
     this.props.addToCart({
       id: product._id,
@@ -53,6 +56,23 @@ class DetailContainer extends React.Component {
       image: product.image,
       quantity: 1,
     });
+    this.setState({
+      notifications: {
+        type: "success",
+        title: "Thanh cong",
+        text: "San pham duoc them vao gio hang",
+        animateIn: "zoomInLeft",
+        animateOut: "zoomOutRight",
+        hide: true,
+        nonblock: true,
+      },
+    });
+    timeOut = setTimeout(() => {
+      this.setState({
+        notifications: null,
+      });
+      timeOut = null;
+    }, 2000);
   };
 
   async componentDidMount() {
@@ -72,6 +92,7 @@ class DetailContainer extends React.Component {
     isStock: product && product.is_stock ? "Còn hàng" : "Hết hàng",
     comments: this.state.comments,
     inputs: this.state.inputs,
+    notifications: this.state.notifications,
     onChangeInput: this._onChangeInput,
     onSubmitForm: this._onSubmitForm,
     onClickAddToCart: this._onClickAddToCart,

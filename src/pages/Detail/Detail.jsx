@@ -1,5 +1,7 @@
 import React from "react";
-import { getImageUrl } from "../../shared/utils";
+import { getImageUrl, formatPrice } from "../../shared/utils";
+import { Notification } from "react-pnotify";
+
 class Detail extends React.Component {
   render() {
     const {
@@ -10,6 +12,7 @@ class Detail extends React.Component {
       onChangeInput,
       onSubmitForm,
       onClickAddToCart,
+      notifications,
     } = this.props;
     return (
       <>
@@ -43,7 +46,7 @@ class Detail extends React.Component {
                   {product && product.price && (
                     <>
                       <li id="price">Giá Bán (chưa bao gồm VAT)</li>
-                      <li id="price-number">{product.price}đ</li>
+                      <li id="price-number">{formatPrice(product.price)}</li>
                     </>
                   )}
                   <li
@@ -174,6 +177,7 @@ class Detail extends React.Component {
             </ul>
           </div>
         </div>
+        {(notifications && <Notification {...notifications} />) || null}
       </>
     );
   }
